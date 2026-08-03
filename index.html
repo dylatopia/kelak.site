@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kelak — Time-Locked Digital Vaults</title>
+<meta name="description" content="Kelak lets you lock a message, photo, video or voice note on BOT Chain, opened only by the intended recipient when the day arrives." />
+<meta property="og:title" content="Kelak — Some words are meant for the future." />
+<meta property="og:description" content="Create time-locked digital vaults for yourself or someone you care about." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero">
+      <!-- LOGO: drop your real file at assets/logo.png and it appears here -->
+      <span class="logo-slot"><img src="assets/logo.png" alt="Kelak logo" onerror="this.style.display='none';this.parentNode.classList.add('is-empty')" /><em>LOGO HERE</em></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#create">Create Vault</a>
+      <a href="#how">How It Works</a>
+      <a href="#why">Why Blockchain</a>
+      <a href="#vaults" id="navMyVaults" class="hidden">My Vaults</a>
+    </nav>
+    <button id="connectBtn" class="btn btn-primary btn-sm">Connect Wallet</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">On BOT Chain</p>
+    <h1>Some words are meant for the future.</h1>
+    <p class="lede">Create time-locked digital vaults for yourself or someone you care about. Protected by blockchain. Opened only when the time comes.</p>
+    <div class="hero-actions">
+      <a href="#create" class="cta-plaque" aria-label="Create a Vault">
+        <img src="assets/cta-make-vault.png" alt="Make Vault" width="933" height="763" />
+      </a>
+      <a href="#how" class="btn btn-ghost">📖 Learn More</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <!-- HERO IMAGE: assets/vault-wall.jpg -->
+    <div class="frame">
+      <img src="assets/vault-wall.jpg" alt="A wall of brass numbered safety deposit boxes in a Victorian bank vault" width="1024" height="1280" />
+      <span class="vignette"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="section about-hero">
+  <div class="panel ornate narrow about-panel">
+    <h2 class="script">About Kelak</h2>
+    <p><em>Kelak</em> is an Indonesian word meaning <em>someday</em> — a gentle, unhurried kind of later. Kelak is a place to leave something for that someday: a letter to a child not yet old enough to read it, a recording for an anniversary still years off, a note to your own future self.</p>
+    <p>We use a blockchain not because it is fashionable, but because a promise about time needs a keeper that does not forget, does not close, and cannot be persuaded to peek early. The contract holds the vault; the calendar holds the key.</p>
+  </div>
+</section>
+
+<!-- ============ CREATE VAULT ============ -->
+<section id="create" class="section">
+  <div class="panel ornate">
+    <h2 class="script">Entrust something to time</h2>
+    <p class="sub">Fill the ledger below. Once sealed, not even you can open it early.</p>
+
+    <form id="vaultForm" class="form" novalidate>
+      <label>Recipient wallet address
+        <input type="text" id="recipient" placeholder="0x…" autocomplete="off" spellcheck="false" />
+        <small class="note">This is the crypto wallet address of the person who should receive this vault — not their email or name.</small>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="forMyself" />
+        <span>This vault is for my future self</span>
+      </label>
+
+      <label>Content type
+        <select id="contentType">
+          <option value="text">Text</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+          <option value="voice">Voice</option>
+        </select>
+      </label>
+
+      <label id="textWrap">Your message
+        <textarea id="contentText" rows="5" placeholder="Dear you, in the years to come…"></textarea>
+      </label>
+
+      <label id="linkWrap" class="hidden">Link to your file
+        <input type="text" id="contentLink" placeholder="https://…" autocomplete="off" spellcheck="false" />
+        <small class="note">Upload your file elsewhere and paste the link here.</small>
+      </label>
+
+      <label>Unlock date & time
+      <input type="datetime-local" id="unlockDate" />
+      </label>
+
+      <p id="formError" class="error hidden"></p>
+      <button type="submit" class="btn btn-primary btn-wide" id="lockBtn">✨ Lock Vault</button>
+    </form>
+
+    <div id="confirmCard" class="success hidden">
+      <h3 class="script">Before you seal this…</h3>
+      <dl class="kv">
+        <dt>Recipient</dt><dd id="confirmRecipient" class="mono">—</dd>
+        <dt>Content type</dt><dd id="confirmType">—</dd>
+        <dt>Opens on</dt><dd id="confirmDate">—</dd>
+      </dl>
+      <p class="note">Once sealed, none of this can be changed — not the recipient, not the date, not the words inside. Please make sure the wallet address above is correct.</p>
+      <div class="hero-actions">
+        <button class="btn btn-ghost btn-sm" id="backToEditBtn">Go back and edit</button>
+        <button class="btn btn-primary" id="confirmLockBtn">Yes, seal it</button>
+      </div>
+    </div>
+
+    <div id="successCard" class="success hidden">
+      <div class="sprout">🌱</div>
+      <h3 class="script">Your words have been entrusted to the future.</h3>
+      <dl class="kv">
+        <dt>Vault ID</dt><dd id="successVaultId">—</dd>
+        <dt>Transaction</dt><dd id="successTx" class="mono">—</dd>
+      </dl>
+      <button class="btn btn-ghost btn-sm" id="copyLinkBtn">🔗 Copy vault link</button>
+      <button class="btn btn-ghost btn-sm" id="againBtn">Seal another</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="section">
+  <h2 class="script center">How Kelak Works</h2>
+  <div class="cards">
+    <article class="card card-plate card-plate--how"><span class="numeral">I</span><h3>Create</h3><p>Write a letter, or paste a link to a photo, film or voice note meant for a particular someone.</p></article>
+    <article class="card card-plate card-plate--how"><span class="numeral">II</span><h3>Lock</h3><p>Choose the day it may be opened. The vault is sealed on-chain and the key is time itself.</p></article>
+    <article class="card card-plate card-plate--how"><span class="numeral">III</span><h3>Open</h3><p>When the date arrives, only the recipient's wallet can turn the lock and read what waited.</p></article>
+  </div>
+</section>
+
+<!-- ============ WHY BLOCKCHAIN ============ -->
+<section id="why" class="section">
+  <h2 class="script center">Why Blockchain?</h2>
+  <div class="cards">
+    <article class="card card-plate card-plate--why"><h3>Immutable</h3><p>Once sealed, the contents cannot be altered or quietly deleted — not by us, not by anyone.</p></article>
+    <article class="card card-plate card-plate--why"><h3>Time-Locked</h3><p>The unlock date is enforced by the contract itself, not by a company's promise.</p></article>
+    <article class="card card-plate card-plate--why"><h3>Ownership</h3><p>The vault belongs to the wallets involved. No account, no subscription, no gatekeeper.</p></article>
+  </div>
+</section>
+
+<!-- ============ VAULT DETAIL ============ -->
+<section id="vault" class="section">
+  <div class="panel ornate">
+    <h2 class="script">Open a vault</h2>
+    <div class="lookup">
+      <input type="text" id="lookupId" placeholder="Vault ID, e.g. 3" />
+      <button class="btn btn-ghost btn-sm" id="lookupBtn">Look up</button>
+    </div>
+    <p id="vaultError" class="error hidden"></p>
+
+    <div id="vaultDetail" class="hidden">
+      <dl class="kv wide">
+        <dt>Owner</dt><dd id="vOwner" class="mono">—</dd>
+        <dt>Recipient</dt><dd id="vRecipient" class="mono">—</dd>
+        <dt>Created</dt><dd id="vCreated">—</dd>
+        <dt>Unlocks</dt><dd id="vUnlock">—</dd>
+        <dt>Status</dt><dd id="vStatus">—</dd>
+      </dl>
+
+      <div id="lockedBox" class="locked hidden">
+        <div class="lock-glyph" aria-hidden="true">
+          <svg viewBox="0 0 120 140" role="img" aria-label="Ornate lock">
+            <path d="M35 60V45a25 25 0 0 1 50 0v15" fill="none" stroke="currentColor" stroke-width="5"/>
+            <rect x="18" y="60" width="84" height="66" rx="10" fill="none" stroke="currentColor" stroke-width="5"/>
+            <circle cx="60" cy="88" r="9" fill="none" stroke="currentColor" stroke-width="5"/>
+            <path d="M60 97v16" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M18 74h84M18 112h84" stroke="currentColor" stroke-width="2" opacity=".5"/>
+          </svg>
+        </div>
+        <p class="locked-text">This vault cannot be opened yet.</p>
+        <p id="countdown" class="countdown">—</p>
+      </div>
+
+      <div id="openBox" class="hidden">
+        <button class="btn btn-primary" id="unlockBtn">Open this vault</button>
+      </div>
+
+      <div id="revealBox" class="reveal hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section id="vaults" class="section hidden">
+  <h2 class="script center">My Vaults</h2>
+  <div class="cards two">
+    <div class="panel ornate">
+      <h3 class="subhead">My Created Vaults</h3>
+      <div id="ownedList" class="list"><p class="muted">Connect your wallet to see them.</p></div>
+    </div>
+    <div class="panel ornate">
+      <h3 class="subhead">My Received Vaults</h3>
+      <div id="receivedList" class="list"><p class="muted">Connect your wallet to see them.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span class="rule"></span>
+  <p>Kelak · sealed on BOT Chain · <span class="mono" id="footAddr">contract not connected</span></p>
+  <p class="foot-links"><a href="https://github.com/dylatopia" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
