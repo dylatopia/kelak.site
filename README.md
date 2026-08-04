@@ -9,6 +9,10 @@ Kelak (Indonesian for *"someday"*) is a time-locked digital vault platform built
 2. **Lock** — the vault is sealed on-chain. Nobody, not even the creator, can access it early or edit it afterward.
 3. **Open** — once the unlock date arrives, only the recipient's connected wallet can open the vault and reveal its contents.
 
+## Why Kelak?
+
+Every person has things they wish they could say — not today, but at the right time. A parent may want to leave a letter for their child to open on their 18th birthday. A graduate may want to write to their future self five years from now. Today, these messages usually live on cloud services or personal devices, where they can be edited, deleted, opened too early, or simply lost. Kelak exists so that a promise about time is kept by something more reliable than a company's server: a smart contract that cannot be rushed, edited, or quietly deleted.
+
 ## Why blockchain?
 
 A promise about time needs a keeper that doesn't forget, can't be persuaded to peek early, and can't quietly change the rules. The smart contract enforces this instead of relying on a company's server or goodwill:
@@ -23,6 +27,12 @@ A promise about time needs a keeper that doesn't forget, can't be persuaded to p
 3. Confirm the transaction in your wallet — your vault is now sealed.
 4. Share the vault link with the recipient, or check back yourself if it's for your future self.
 5. Once the unlock date passes, the recipient connects their wallet and clicks **Open this vault** to reveal it.
+
+## A note on photos, videos, and voice notes
+
+Blockchains are built to store small pieces of data cheaply — not large files like photos or videos. Storing a video directly on-chain would be prohibitively expensive and, in most cases, technically impossible.
+
+Because of this, Kelak asks you to upload your photo, video, or voice note to any file-hosting service you trust (for example, a public link from Google Drive, Imgur, or similar), and then paste that link into the vault instead of the file itself. What Kelak stores on-chain is the **link and the promise** — permanent, owned by your wallet, and released only at the right time — even though the file itself lives elsewhere. This is a common and accepted pattern in blockchain applications, and it's what keeps Kelak affordable to actually use.
 
 ## Tech stack
 
