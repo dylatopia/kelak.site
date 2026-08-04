@@ -140,11 +140,15 @@ h3 { font-size: 1.25rem; }
 .ornate::before { content: ""; position: absolute; inset: 7px; border: 1px solid color-mix(in oklab, var(--brass) 22%, transparent); border-radius: 2px; pointer-events: none; }
 .panel.narrow { max-width: 720px; margin: 0 auto; }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
-#how, #why { max-width: 1300px; }
-#how .cards, #why .cards {
-  grid-template-columns: repeat(3, minmax(0, 400px));
-  justify-content: center;
+
+@media (min-width: 901px) {
+  #how, #why { max-width: 1300px; }
+  #how .cards, #why .cards {
+    grid-template-columns: repeat(3, minmax(0, 400px));
+    justify-content: center;
+  }
 }
+
 .cards.two { grid-template-columns: repeat(2, 1fr); }
 .card p { color: color-mix(in oklab, var(--parchment) 78%, transparent); margin: 0; }
 .numeral { font-family: var(--font-display); color: var(--brass); letter-spacing: .3em; font-size: .8rem; }
@@ -209,12 +213,13 @@ select option { background: var(--dark-walnut); }
   align-items: center;
   justify-content: center;
   text-align: center;
+  container-type: inline-size;
 }
 .card-plate--how { padding: 22% 18%; }
 .card-plate--why { padding: 22% 18% 22%; }
 .card-plate::before { content: none; }
-.card-plate h3 { margin: 0 0 .5rem; font-size: 1.3rem; }
-.card-plate p { font-size: .95rem; line-height: 1.45; }
+.card-plate h3 { margin: 0 0 .5rem; font-size: clamp(0.9rem, 9cqw, 1.3rem); }
+.card-plate p { font-size: clamp(0.62rem, 6cqw, 0.95rem); line-height: 1.35; }
 
 #how { padding-top: 2rem; padding-bottom: 2rem; }
 #why { padding-top: 1rem; padding-bottom: 2rem; }
